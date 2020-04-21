@@ -1,4 +1,5 @@
 import utils
+import sys
 
 
 class ExhaustiveSearch:
@@ -11,13 +12,11 @@ class ExhaustiveSearch:
         optimal_item = item.copy()
 
         if not optimal_f:
-            optimal_f = 100000
-
-        print('start item, f', optimal_item, optimal_f)
+            optimal_f = sys.maxsize
 
         for i in range(self.__points_count ** self.__cities_count - 1):
             next_item, f = self.__generate_item(item)
-            print(next_item, f)
+            # print(next_item, f)
             if f & (f < optimal_f):
                 optimal_f = f
                 optimal_item = next_item.copy()

@@ -4,6 +4,9 @@ from ga.Population import Population
 class GeneticAlgorithm:
     def __init__(self, population_count, steps_count):
         population = Population(population_count)
+        while len(population.filter()) < population_count // 2:
+            population = Population(population_count)
+
         print('Первое поколение: ')
         population.print_out()
         print('_____________')
@@ -11,7 +14,7 @@ class GeneticAlgorithm:
         i = 0
         while (i < steps_count) & (population.size() > 1):
             new_population = population.select_best()
-            if len(new_population) == 1:
+            if len(new_population) <= 1:
                 break
 
             population.set(new_population)
@@ -19,10 +22,11 @@ class GeneticAlgorithm:
             population.print_out()
 
             population.crossover()
-            population.mutation()
 
             print('Поколение', i + 2)
             population.print_out()
+
+            population.mutation()
 
             i += 1
             print('_____________')

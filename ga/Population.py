@@ -15,8 +15,10 @@ class Population:
 
     def select_best(self):
         sorted_population = self.__sort()
-        count = random.randint(len(sorted_population) // 2, len(sorted_population) - 1)
-        return sorted_population[0:count]
+        if len(sorted_population) > 1:
+            return sorted_population[0:len(sorted_population)-1]
+        else:
+            return sorted_population
 
     def crossover(self):
         current_population = self.__population
@@ -49,7 +51,10 @@ class Population:
         return len(self.__population)
 
     def min(self):
-        return min(self.__population, key=lambda x: x.f())
+        return min(self.__sort(), key=lambda x: x.f())
+
+    def filter(self):
+        return list(filter(lambda x: x.f(), self.__population))
 
     def __sort(self):
         filtered_population = filter(lambda x: x.f(), self.__population)
